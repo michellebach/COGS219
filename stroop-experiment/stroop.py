@@ -18,27 +18,25 @@ while True:
     word_stim.setText(cur_stim)
     word_stim.setColor(cur_stim)
     placeholder.draw()
-    instruction.draw()
+    instruction.autoDraw = True
     #fixation cross 
     fixation_cross.draw()
     win.flip()
     core.wait(0.5)
     # inter-stimulus
     placeholder.draw()
-    instruction.draw()
     win.flip()
     core.wait(0.5)
     # stimulus
     placeholder.draw()
-    instruction.draw()
     word_stim.draw()
     win.flip()
     core.wait(1.0)
-    placeholder.draw()
-    instruction.draw()    
+    placeholder.draw()    
     win.flip()
     core.wait(.15)
 
     if event.getKeys(['q']):
         win.close()
         core.quit()
+        

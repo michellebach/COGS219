@@ -13,6 +13,14 @@ instruction = visual.TextStim(win,text="Press the first letter of the ink color"
 #add fixation cross
 fixation_cross = visual.TextStim(win, text = "+", color = "black", height = 15)
 
+#first letter of color keys
+allowed_keys = ['r','o','y','g','b','q']
+
+#reaction time
+RTs = []
+react_timer = core.Clock()
+
+key_pressed = False
 while True:
     cur_stim = random.choice(stimuli)
     word_stim.setText(cur_stim)
@@ -31,12 +39,15 @@ while True:
     placeholder.draw()
     word_stim.draw()
     win.flip()
-    core.wait(1.0)
-    placeholder.draw()    
-    win.flip()
-    core.wait(.15)
+    # reset time
+    react_timer.reset()
+    key_pressed = event.waitKeys(keyList=allowed_keys)
+    # append rts
+    RTs.append(react_timer.getTime()*1000,0)
+    print(key_pressed[0])
 
-    if event.getKeys(['q']):
-        win.close()
-        core.quit()
-        
+
+    if key_pressed[0] == 'q':
+        break
+
+print(RTs)

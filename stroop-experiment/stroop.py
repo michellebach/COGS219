@@ -18,6 +18,8 @@ allowed_keys = ['r','o','y','g','b','q']
 
 #add incorrect feedback
 incorrect_feedback = visual.TextStim(win, text = "Incorrect", color = "black", height = 30)
+#add slow feedback
+slow_feedback = visual.TextStim(win, text = "Too slow", color = "black", height = 30)
 
 #reaction time
 RTs = []
@@ -44,24 +46,25 @@ while True:
     win.flip()
     # reset time
     react_timer.reset()
-    key_pressed = event.waitKeys(keyList=allowed_keys)
-    # append rts
-    RTs.append(round(react_timer.getTime()*1000,0))
-    print(key_pressed[0])
-    # display feedback
-    if key_pressed[0] == cur_stim[0]:
-        continue
+    key_pressed = event.waitKeys(keyList=allowed_keys, maxWait = 2)
+    # time limit + feedback
+    if not key_pressed:
+        slow_feedback.draw()
+        win.flip()
+        core.wait(1)
+    elif key_pressed[0] == cur_stim[0]:
+        pass
     elif key_pressed[0] == 'q':
         break
-    else: 
+    else:
         incorrect_feedback.draw()
         win.flip()
         core.wait(1)
+    # append rts
+    RTs.append(round(react_timer.getTime()*1000,0))
+    print(key_pressed[0])
 
     if key_pressed[0] == 'q':
         break
 
 print(RTs)
-
-
-test test

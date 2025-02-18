@@ -16,6 +16,9 @@ fixation_cross = visual.TextStim(win, text = "+", color = "black", height = 15)
 #first letter of color keys
 allowed_keys = ['r','o','y','g','b','q']
 
+#add incorrect feedback
+incorrect_feedback = visual.TextStim(win, text = "Incorrect", color = "black", height = 30)
+
 #reaction time
 RTs = []
 react_timer = core.Clock()
@@ -43,11 +46,22 @@ while True:
     react_timer.reset()
     key_pressed = event.waitKeys(keyList=allowed_keys)
     # append rts
-    RTs.append(react_timer.getTime()*1000,0)
+    RTs.append(round(react_timer.getTime()*1000,0))
     print(key_pressed[0])
-
+    # display feedback
+    if key_pressed[0] == cur_stim[0]:
+        continue
+    elif key_pressed[0] == 'q':
+        break
+    else: 
+        incorrect_feedback.draw()
+        win.flip()
+        core.wait(1)
 
     if key_pressed[0] == 'q':
         break
 
 print(RTs)
+
+
+test test
